@@ -54,10 +54,13 @@ plus a 2nd only if it is also important (max 2, unless the draft points name mor
   shows them and "Download Word (.docx)" (proposal_doc.py, python-docx) puts the logo in the page header.
 - Files: app.py (page + prompts), theme.py (colours), helpers.py, pictures.py, proposal_doc.py.
 
-## Hour 4: safe to share (in progress)
+## Hour 4: safe to share (done)
 - Sample buttons (samples.py) fill Client Name + draft points (no API call); samples 1 and 3 also attach an invented vendor
   report PDF from samples/ (made by make_sample_reports.py / make_sample_report_gut.py).
 - saved_results.json holds a layout + proposal per sample (key sample_1..3). make_saved.py (run by the user, costs API money)
   overwrites hand-written placeholders with real model output. "Load saved result" loads them with no API call.
 - AI failures show a friendly message; after a sample is chosen, a "Load saved result" fallback is offered.
 - core.py holds prompts + AI calls (shared with make_saved.py); saved.py reads/writes saved_results.json.
+- Password gate (st.secrets["APP_PASSWORD"], never hardcoded), 10 AI calls per session (app.py MAX_GENERATIONS), and a
+  visible "invented data only" note. Secrets live in .env and .streamlit/secrets.toml, both git ignored.
+- README.md has the run instructions. Do not touch other features when working on hygiene.
