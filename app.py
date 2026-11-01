@@ -1,4 +1,5 @@
 import copy
+import hmac
 import html
 import json
 import math
@@ -27,6 +28,7 @@ from theme import BLUSH, BRAND_FONT, DARK, GOLD, GREEN, ORANGE, SAND
 MAX_PDF_MB = 10
 MAX_IMAGE_MB = 5  # the API limit for one image
 MAX_FILES = 5
+MAX_GENERATIONS = 10  # AI calls per session: Generate, Apply change and Generate Proposal each count once
 
 def load_saved_result(i: int) -> None:
     """Button callback: show the saved layout and proposal for sample i. Makes no AI call."""
@@ -61,6 +63,20 @@ def show_failure(message: str, offer_saved: bool = False, raw: str | None = None
             st.button("Load saved result", key="fallback_load", on_click=load_saved_result, args=(idx,))
         else:
             st.caption("Tip: the sample buttons come with saved results you can load without the AI.")
+
+
+def use_generation(offer_saved: bool = False) -> bool:
+    """Count one AI call for this session. If the limit is reached, say so and return False."""
+    used = st.session_state.get("gen_count", 0)
+    if used >= MAX_GENERATIONS:
+        show_failure(
+            f"You have used all {MAX_GENERATIONS} AI generations for this session. You can still look at the saved "
+            "results: click Start over, pick a sample, then Load saved result.",
+            offer_saved,
+        )
+        return False
+    st.session_state["gen_count"] = used + 1
+    return True
 
 
 def request_layout(prompt: str, attachments: list[tuple[str, bytes]] | None = None, offer_saved: bool = False):
@@ -290,7 +306,41 @@ def render_report(layout: dict) -> None:
 
 
 st.title("Web UI and Report Layout Proposal Builder (Demo)")
+st.info("Demo uses invented data only. Please don't enter real or confidential information.")
 
+
+def check_password() -> None:
+    """Stop the page until the right password is typed. The password comes from st.secrets, never from the code."""
+    try:
+        expected = str(st.secrets["APP_PASSWORD"])
+    except Exception:  # no secrets file, or no APP_PASSWORD in it
+        expected = ""
+    if not expected:
+        st.error(
+            "The app password is not set. Add APP_PASSWORD to .streamlit/secrets.toml (on your computer) "
+            "or to the app's Secrets (on Streamlit Cloud). See README.md."
+        )
+        st.stop()
+    if st.session_state.get("authed"):
+        return
+    with st.form("login"):
+        entered = st.text_input("Password", type="password")
+        submitted = st.form_submit_button("Enter")
+    if submitted:
+        if hmac.compare_digest(entered.encode(), expected.encode()):
+            st.session_state["authed"] = True
+            st.rerun()
+        st.error("That password is not correct.")
+    st.stop()
+
+
+check_password()
+
+if not os.getenv("ANTHROPIC_API_KEY"):  # normally from .env; on Streamlit Cloud a secret of the same name also works
+    try:
+        os.environ["ANTHROPIC_API_KEY"] = str(st.secrets["ANTHROPIC_API_KEY"])
+    except Exception:
+        pass
 if not os.getenv("ANTHROPIC_API_KEY"):
     st.error("No API key found. Paste your key into the .env file (ANTHROPIC_API_KEY=...) and restart.")
     st.stop()
@@ -381,6 +431,8 @@ request = st.text_area(
     ),
 )
 
+counter_slot = st.empty()
+
 if not has_layout:
     if st.button("Generate web UI and report layout"):
         attachments, file_error = check_files(files or [])
@@ -394,8 +446,10 @@ if not has_layout:
             st.error(file_error)
         else:
             prompt = layout_prompt(company, request, [t for t, _ in attachments])
-            with st.spinner("Asking the model for a layout..."):
-                layout = request_layout(prompt, attachments, offer_saved=True)
+            layout = None
+            if use_generation(offer_saved=True):
+                with st.spinner("Asking the model for a layout..."):
+                    layout = request_layout(prompt, attachments, offer_saved=True)
             if layout is not None:
                 save_layout(layout, request.strip())
 else:
@@ -403,7 +457,7 @@ else:
     if apply_col.button("Apply change"):
         if not request.strip():
             st.warning("Type a change first.")
-        else:
+        elif use_generation():
             with st.spinner("Updating the layout..."):
                 updated = request_layout(
                     EDIT_PROMPT.format(layout=json.dumps(st.session_state["layout"], indent=2), change=request)
@@ -441,7 +495,7 @@ if st.button(
 ):
     if "layout" not in st.session_state:
         st.warning("Please click Generate web UI and report layout first - there is no saved layout yet.")
-    else:
+    elif use_generation():
         with st.spinner("Writing the proposal..."):
             try:
                 st.session_state["proposal"] = generate_proposal(
@@ -485,3 +539,5 @@ if "proposal" in st.session_state:
         file_name="proposal.docx",
         mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     )
+
+counter_slot.caption(f"AI generations used this session: {st.session_state.get('gen_count', 0)} of {MAX_GENERATIONS}")
