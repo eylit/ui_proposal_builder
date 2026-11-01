@@ -61,6 +61,6 @@ plus a 2nd only if it is also important (max 2, unless the draft points name mor
   overwrites hand-written placeholders with real model output. "Load saved result" loads them with no API call.
 - AI failures show a friendly message; after a sample is chosen, a "Load saved result" fallback is offered.
 - core.py holds prompts + AI calls (shared with make_saved.py); saved.py reads/writes saved_results.json.
-- Password gate (st.secrets["APP_PASSWORD"], never hardcoded), 10 AI calls per session (app.py MAX_GENERATIONS), and a
+- Optional password gate (only if st.secrets["APP_PASSWORD"] is set; never hardcoded), 10 AI calls per session (app.py MAX_GENERATIONS), and a
   visible "invented data only" note. Secrets live in .env and .streamlit/secrets.toml, both git ignored.
 - README.md has the run instructions. Do not touch other features when working on hygiene.

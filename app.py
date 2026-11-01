@@ -310,17 +310,13 @@ st.info("Demo uses invented data only. Please don't enter real or confidential i
 
 
 def check_password() -> None:
-    """Stop the page until the right password is typed. The password comes from st.secrets, never from the code."""
+    """Optional password gate. It only switches on when APP_PASSWORD is set in st.secrets (never in the code)."""
     try:
         expected = str(st.secrets["APP_PASSWORD"])
     except Exception:  # no secrets file, or no APP_PASSWORD in it
         expected = ""
     if not expected:
-        st.error(
-            "The app password is not set. Add APP_PASSWORD to .streamlit/secrets.toml (on your computer) "
-            "or to the app's Secrets (on Streamlit Cloud). See README.md."
-        )
-        st.stop()
+        return  # no password configured: the page is open
     if st.session_state.get("authed"):
         return
     with st.form("login"):

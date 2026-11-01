@@ -11,10 +11,11 @@ logo that you can edit and download as a Word file.
 python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 echo 'ANTHROPIC_API_KEY=paste-your-key-here' > .env          # git ignores this file
-cp .streamlit/secrets.toml.example .streamlit/secrets.toml    # then set APP_PASSWORD in it (also ignored)
+# optional password: copy .streamlit/secrets.toml.example to .streamlit/secrets.toml and set APP_PASSWORD (also ignored)
 streamlit run app.py
 ```
-Sign in with your `APP_PASSWORD`. On Streamlit Cloud, put `APP_PASSWORD` and `ANTHROPIC_API_KEY` in the app's Secrets.
+There is no password unless you set `APP_PASSWORD`; then the page asks for it. On Streamlit Cloud, put
+`ANTHROPIC_API_KEY` (and optionally `APP_PASSWORD`) in the app's Secrets.
 
 ## Try the samples
 Three buttons fill in an invented client and brief (samples 1 and 3 also attach an invented vendor report PDF). Clicking
