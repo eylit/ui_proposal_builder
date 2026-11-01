@@ -1,0 +1,277 @@
+{
+  "sample_1": {
+    "source": "hand-written placeholder",
+    "made": "2025-11-01",
+    "layout": {
+      "panel": {
+        "name": "Biological Age",
+        "icon": "dna"
+      },
+      "tests": [
+        {
+          "name": "Aging Tempo",
+          "value": "0.8",
+          "unit": "years of aging per year",
+          "reference_range": "< 1",
+          "scale": {
+            "min": 0.45,
+            "max": 1.6,
+            "normal_min": 0.45,
+            "normal_max": 1.0
+          },
+          "history": [
+            {
+              "label": "Dec 2024",
+              "value": 1.0
+            },
+            {
+              "label": "Jun 2025",
+              "value": 0.9
+            },
+            {
+              "label": "Sep 2025",
+              "value": 0.8
+            }
+          ],
+          "show_trend": true,
+          "note": "Your body is aging more slowly than one year for each calendar year.",
+          "status": "Slower pace",
+          "status_options": [
+            "Slower pace",
+            "Average pace",
+            "Faster pace"
+          ],
+          "abnormal_statuses": [
+            "Faster pace"
+          ],
+          "recommendation": "Please talk to your doctor about actions you can take to slow down the pace."
+        },
+        {
+          "name": "Cellular Age Index",
+          "value": "33.6",
+          "unit": "years",
+          "reference_range": "",
+          "scale": null,
+          "history": [
+            {
+              "label": "Dec 2024",
+              "value": 41.0
+            },
+            {
+              "label": "Jun 2025",
+              "value": 35.2
+            },
+            {
+              "label": "Sep 2025",
+              "value": 33.6
+            }
+          ],
+          "show_trend": true,
+          "note": "Your Cellular Age Index is younger than your actual age.",
+          "status": "Younger",
+          "status_options": [
+            "Younger",
+            "Similar",
+            "Older"
+          ],
+          "abnormal_statuses": [
+            "Older"
+          ],
+          "recommendation": "Please talk to your doctor about your result."
+        }
+      ]
+    },
+    "proposal": "**Proposed Website UI and Report Layout for Biological Age**\nPrepared by BioHealthy for Maple Grove Clinics.\n\n**Doctor- and nurse-facing web page**\nThe doctor or nurse sees the key tests of the Biological Age panel.\n- The test name, result value and unit\n- The normal range, where the test has one\n- A status label, such as \"Slower pace\"\n- The panel of the test\n\nThe nurse will manually key in the data for **Aging Tempo** and **Cellular Age Index**.\nThe status label for **Aging Tempo** is Slower pace, Average pace and Faster pace.\nThe status label for **Cellular Age Index** is Younger, Similar and Older.\n\n[Picture: Website UI]\n\n**Patient report layout**\nFor **Aging Tempo**, the report displays the result value with its unit, the normal range of < 1, and a one-line summary of the result.\nFor **Cellular Age Index**, the report displays the result value with its unit, no normal range, so none is shown, and a one-line summary of the result.\n\nA recommendation appears only for abnormal results, as follows:\n- Aging Tempo - Faster pace - Please talk to your doctor about actions you can take to slow down the pace.\n- Cellular Age Index - Older - Please talk to your doctor about your result.\n\n**Aging Tempo** shows its results from the latest three sessions, if available.\n**Cellular Age Index** shows its results from the latest three sessions, if available.\n\n[Picture: Report Layout]"
+  },
+  "sample_2": {
+    "source": "hand-written placeholder",
+    "made": "2025-11-01",
+    "layout": {
+      "panel": {
+        "name": "Kidney Health",
+        "icon": "kidney"
+      },
+      "tests": [
+        {
+          "name": "eGFR (kidney filtration)",
+          "value": "88",
+          "unit": "mL/min/1.73 m2",
+          "reference_range": ">= 90",
+          "scale": {
+            "min": 0,
+            "max": 120,
+            "normal_min": 90,
+            "normal_max": 120
+          },
+          "history": [
+            {
+              "label": "Jan 2025",
+              "value": 98
+            },
+            {
+              "label": "Apr 2025",
+              "value": 92
+            },
+            {
+              "label": "Jul 2025",
+              "value": 88
+            }
+          ],
+          "show_trend": true,
+          "note": "Your kidney filtration is a little below the usual range.",
+          "status": "Mildly reduced",
+          "status_options": [
+            "Normal",
+            "Mildly reduced",
+            "Reduced"
+          ],
+          "abnormal_statuses": [
+            "Mildly reduced",
+            "Reduced"
+          ],
+          "recommendation": "Drink enough water and talk to your doctor about your kidney results."
+        },
+        {
+          "name": "Serum creatinine",
+          "value": "50",
+          "unit": "umol/L",
+          "reference_range": "45 - 90",
+          "scale": {
+            "min": 0,
+            "max": 150,
+            "normal_min": 45,
+            "normal_max": 90
+          },
+          "history": [],
+          "show_trend": true,
+          "note": "Your creatinine is within the usual range.",
+          "status": "Normal",
+          "status_options": [
+            "Normal",
+            "Slightly high",
+            "High"
+          ],
+          "abnormal_statuses": [
+            "Slightly high",
+            "High"
+          ],
+          "recommendation": "Drink enough water and talk to your doctor about your kidney results."
+        }
+      ]
+    },
+    "proposal": "**Proposed Website UI and Report Layout for Kidney Health**\nPrepared by BioHealthy for LiveFull Health.\n\n**Doctor- and nurse-facing web page**\nThe doctor or nurse sees the key tests of the Kidney Health panel.\n- The test name, result value and unit\n- The normal range, where the test has one\n- A status label, such as \"Normal\"\n- The panel of the test\n\nThe results for **eGFR (kidney filtration)** and **Serum creatinine** sync in automatically from the lab.\nThe status label for **eGFR (kidney filtration)** is Normal, Mildly reduced and Reduced.\nThe status label for **Serum creatinine** is Normal, Slightly high and High.\n\n[Picture: Website UI]\n\n**Patient report layout**\nFor **eGFR (kidney filtration)**, the report displays the result value with its unit, the normal range of >= 90, and a one-line summary of the result.\nFor **Serum creatinine**, the report displays the result value with its unit, the normal range of 45 - 90, and a one-line summary of the result.\n\nA recommendation appears only for abnormal results, as follows:\n- eGFR (kidney filtration) - Mildly reduced - Drink enough water and talk to your doctor about your kidney results.\n- eGFR (kidney filtration) - Reduced - Drink enough water and talk to your doctor about your kidney results.\n- Serum creatinine - Slightly high - Drink enough water and talk to your doctor about your kidney results.\n- Serum creatinine - High - Drink enough water and talk to your doctor about your kidney results.\n\n**eGFR (kidney filtration)** shows its results from the latest three sessions, if available.\n\n[Picture: Report Layout]"
+  },
+  "sample_3": {
+    "source": "hand-written placeholder",
+    "made": "2025-11-01",
+    "layout": {
+      "panel": {
+        "name": "Gut Health",
+        "icon": "general"
+      },
+      "tests": [
+        {
+          "name": "Mind-Gut Link",
+          "value": "2",
+          "unit": "out of 10",
+          "reference_range": "5 - 10",
+          "scale": {
+            "min": 1,
+            "max": 10,
+            "normal_min": 5,
+            "normal_max": 10
+          },
+          "history": [],
+          "show_trend": true,
+          "note": "This score is on the low side, so there is room to support it.",
+          "status": "Poor",
+          "status_options": [
+            "Poor",
+            "Good",
+            "Great"
+          ],
+          "abnormal_statuses": [
+            "Poor"
+          ],
+          "recommendation": "Eat more fibre and plant foods, sleep 7 to 8 hours, and talk to your doctor."
+        },
+        {
+          "name": "Defence Balance",
+          "value": "4",
+          "unit": "out of 10",
+          "reference_range": "5 - 10",
+          "scale": {
+            "min": 1,
+            "max": 10,
+            "normal_min": 5,
+            "normal_max": 10
+          },
+          "history": [],
+          "show_trend": true,
+          "note": "This score is on the low side, so there is room to support it.",
+          "status": "Poor",
+          "status_options": [
+            "Poor",
+            "Good",
+            "Great"
+          ],
+          "abnormal_statuses": [
+            "Poor"
+          ],
+          "recommendation": "Eat more colourful, antioxidant-rich foods and talk to your doctor."
+        },
+        {
+          "name": "Energy Balance",
+          "value": "5",
+          "unit": "out of 10",
+          "reference_range": "5 - 10",
+          "scale": {
+            "min": 1,
+            "max": 10,
+            "normal_min": 5,
+            "normal_max": 10
+          },
+          "history": [],
+          "show_trend": true,
+          "note": "This score is in the good range.",
+          "status": "Good",
+          "status_options": [
+            "Poor",
+            "Good",
+            "Great"
+          ],
+          "abnormal_statuses": [
+            "Poor"
+          ],
+          "recommendation": "Eat more fibre and plant foods and talk to your doctor."
+        },
+        {
+          "name": "Nutrient Processing",
+          "value": "10",
+          "unit": "out of 10",
+          "reference_range": "5 - 10",
+          "scale": {
+            "min": 1,
+            "max": 10,
+            "normal_min": 5,
+            "normal_max": 10
+          },
+          "history": [],
+          "show_trend": true,
+          "note": "This score is in the great range.",
+          "status": "Great",
+          "status_options": [
+            "Poor",
+            "Good",
+            "Great"
+          ],
+          "abnormal_statuses": [
+            "Poor"
+          ],
+          "recommendation": "Eat more fibre and plant foods and talk to your doctor."
+        }
+      ]
+    },
+    "proposal": "**Proposed Website UI and Report Layout for Gut Health**\nPrepared by BioHealthy for Greenfield Digestive Care.\n\n**Doctor- and nurse-facing web page**\nThe doctor or nurse sees the key tests of the Gut Health panel.\n- The test name, result value and unit\n- The normal range, where the test has one\n- A status label, such as \"Poor\"\n- The panel of the test\n\nThe nurse will manually key in the data for **Mind-Gut Link**, **Defence Balance**, **Energy Balance** and **Nutrient Processing**.\nThe status label for **Mind-Gut Link** is Poor, Good and Great.\nThe status label for **Defence Balance** is Poor, Good and Great.\nThe status label for **Energy Balance** is Poor, Good and Great.\nThe status label for **Nutrient Processing** is Poor, Good and Great.\n\n[Picture: Website UI]\n\n**Patient report layout**\nFor **Mind-Gut Link**, the report displays the result value with its unit, the normal range of 5 - 10, and a one-line summary of the result.\nFor **Defence Balance**, the report displays the result value with its unit, the normal range of 5 - 10, and a one-line summary of the result.\nFor **Energy Balance**, the report displays the result value with its unit, the normal range of 5 - 10, and a one-line summary of the result.\nFor **Nutrient Processing**, the report displays the result value with its unit, the normal range of 5 - 10, and a one-line summary of the result.\n\nA recommendation appears only for abnormal results, as follows:\n- Mind-Gut Link - Poor - Eat more fibre and plant foods, sleep 7 to 8 hours, and talk to your doctor.\n- Defence Balance - Poor - Eat more colourful, antioxidant-rich foods and talk to your doctor.\n- Energy Balance - Poor - Eat more fibre and plant foods and talk to your doctor.\n- Nutrient Processing - Poor - Eat more fibre and plant foods and talk to your doctor.\n\n[Picture: Report Layout]"
+  }
+}

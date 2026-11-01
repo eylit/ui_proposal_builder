@@ -1,0 +1,11 @@
+# secrets: never commit these
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+Claude_ui_builder_demo_api_key.txt
+
+# environment and caches
+venv/
+__pycache__/
+*.pyc
