@@ -79,6 +79,13 @@ def use_generation(offer_saved: bool = False) -> bool:
     return True
 
 
+def start_over() -> None:
+    """Button callback: forget the layout and proposal and go back to the sample buttons."""
+    for k in ("layout", "proposal", "draft_points", "sample_report", "sample_idx", "loaded_saved", "saved_notice"):
+        st.session_state.pop(k, None)
+    st.session_state["clear_request"] = True
+
+
 def request_layout(prompt: str, attachments: list[tuple[str, bytes]] | None = None, offer_saved: bool = False):
     """Ask the model for a layout. On any failure show a friendly message and return None."""
     try:
@@ -449,8 +456,7 @@ if not has_layout:
             if layout is not None:
                 save_layout(layout, request.strip())
 else:
-    apply_col, start_col, _ = st.columns([1, 1, 4])
-    if apply_col.button("Apply change"):
+    if st.button("Apply change"):
         if not request.strip():
             st.warning("Type a change first.")
         elif use_generation():
@@ -460,11 +466,6 @@ else:
                 )
             if updated is not None:  # on failure the old layout stays as it was
                 save_layout(updated)
-    if start_col.button("Start over"):
-        for k in ("layout", "proposal", "draft_points", "sample_report", "sample_idx", "loaded_saved", "saved_notice"):
-            st.session_state.pop(k, None)
-        st.session_state["clear_request"] = True
-        st.rerun()
 
 if "layout" in st.session_state:
     if st.session_state.get("loaded_saved"):
@@ -535,5 +536,9 @@ if "proposal" in st.session_state:
         file_name="proposal.docx",
         mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     )
+
+if "layout" in st.session_state:  # at the very bottom, away from the buttons you use while editing
+    st.divider()
+    st.button("Start over", key="start_over", on_click=start_over, help="Clears the layout and proposal and goes back to the samples.")
 
 counter_slot.caption(f"AI generations used this session: {st.session_state.get('gen_count', 0)} of {MAX_GENERATIONS}")
